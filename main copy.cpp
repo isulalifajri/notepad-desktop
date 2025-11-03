@@ -190,17 +190,6 @@ void showNotes(HWND hwndParent, const std::string& search = "") {
             x += cardW + margin;
         }
     }
-
-    if (hButtonAdd) {
-        RECT rc;
-        GetClientRect(hMainWnd, &rc);
-        int btnW = 60, btnH = 60;
-        int btnX = rc.right - btnW - 20;  // 20px dari kanan
-        int btnY = rc.bottom - btnH - 20; // 20px dari bawah
-
-        SetWindowPos(hButtonAdd, HWND_TOP, btnX, btnY, btnW, btnH, SWP_SHOWWINDOW);
-    }
-
 }
 
 // ---------------- Note editor window ----------------
@@ -264,17 +253,14 @@ LRESULT CALLBACK NoteWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) 
         break;
     }
 
-    case WM_SIZE: {
-        InvalidateRect(hwnd, NULL, TRUE);
-
-        if (hButtonAdd) {
-            RECT rc;
-            GetClientRect(hwnd, &rc);
-            int btnW = 60, btnH = 60;
-            int btnX = rc.right - btnW - 20;
-            int btnY = rc.bottom - btnH - 20;
-            SetWindowPos(hButtonAdd, HWND_TOP, btnX, btnY, btnW, btnH, SWP_SHOWWINDOW);
-        }
+     case WM_SIZE: {
+        RECT rc;
+        GetClientRect(hwnd, &rc);
+        int btnW = 60, btnH = 60;
+        int margin = 10;
+        int btnX = rc.right - btnW - margin;
+        int btnY = rc.bottom - btnH - margin;
+        SetWindowPos(hButtonAdd, HWND_TOP, btnX, btnY, btnW, btnH, SWP_NOZORDER);
         break;
     }
 
